@@ -2,20 +2,20 @@ import {App, Editor, MarkdownView, Modal, Plugin, PluginSettingTab, Setting,} fr
 import titleRename from "./src/titleRename";
 // Remember to rename these classes and interfaces!
 
-export interface MyPluginSettings {
+export interface TitleTranslateSettings {
 	mySetting: string;
 	api: string;
 	separator: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: TitleTranslateSettings = {
 	mySetting: 'default',
 	api: "",
 	separator : ' - ',
 }
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+export default class TitleTranslate extends Plugin {
+	settings: TitleTranslateSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -114,9 +114,9 @@ class SampleModal extends Modal {
 }
 
 class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: TitleTranslate;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: TitleTranslate) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
