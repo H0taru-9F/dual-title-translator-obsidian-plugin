@@ -1,9 +1,9 @@
 import {App, Notice} from "obsidian";
-import {MyPluginSettings} from "../main";
+import {DualTitleTranslatorSettings} from "../main";
 
-export default async function titleRename(app:App, settings:MyPluginSettings) {
+export default async function titleRename(app:App, settings:DualTitleTranslatorSettings) {
 
-	const separator = settings.separator
+	const separator = ` ${settings.separator} `;
 
 	const activeFile = app.workspace.getActiveFile();
 

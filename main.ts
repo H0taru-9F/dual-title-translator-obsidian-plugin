@@ -1,21 +1,21 @@
-import {App, Editor, MarkdownView, Modal, Plugin, PluginSettingTab, Setting,} from 'obsidian';
+import {App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting,} from 'obsidian';
 import titleRename from "./src/titleRename";
 // Remember to rename these classes and interfaces!
 
-export interface TitleTranslateSettings {
+export interface DualTitleTranslatorSettings {
 	mySetting: string;
 	api: string;
 	separator: string;
 }
 
-const DEFAULT_SETTINGS: TitleTranslateSettings = {
+const DEFAULT_SETTINGS: DualTitleTranslatorSettings = {
 	mySetting: 'default',
 	api: "",
-	separator : ' - ',
+	separator : '⇋',
 }
 
-export default class TitleTranslate extends Plugin {
-	settings: TitleTranslateSettings;
+export default class DualTitleTranslator extends Plugin {
+	settings: DualTitleTranslatorSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -114,9 +114,9 @@ class SampleModal extends Modal {
 }
 
 class SampleSettingTab extends PluginSettingTab {
-	plugin: TitleTranslate;
+	plugin: DualTitleTranslator;
 
-	constructor(app: App, plugin: TitleTranslate) {
+	constructor(app: App, plugin: DualTitleTranslator) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -151,8 +151,22 @@ class SampleSettingTab extends PluginSettingTab {
 			.setName('Separator')
 			.setDesc('Separator between file name and translated name')
 			.addText(text => text
+				.setPlaceholder('e.g. - ')
 				.setValue(this.plugin.settings.separator)
 				.onChange(async (value) => {
+					if (!value.trim()) {
+						new Notice('Separator cannot be empty. Please use at least one character.');
+						text.setValue(this.plugin.settings.separator);
+						return;
+					}
+
+					const invalidChars = /[<>:"/\\|?* ]/;
+					if (invalidChars.test(value)) {
+						new Notice('Invalid character in separator! The following characters are not allowed: < > : " / \\ | ? *');
+						text.setValue(this.plugin.settings.separator);
+						return;
+					}
+
 					this.plugin.settings.separator = value;
 					await this.plugin.saveSettings();
 				}));
