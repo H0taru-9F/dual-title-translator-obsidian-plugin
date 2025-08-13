@@ -2,21 +2,17 @@ import {App, Editor, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, TF
 import {titleRename} from "./src/titleRename";
 // Remember to rename these classes and interfaces!
 
-interface TranslatedFiles {
-	path: string;
-	name: string;
-}
 
 export interface DualTitleTranslatorSettings {
-	translatedFiles: TranslatedFiles[];
 	api: string;
 	separator: string;
+	DefaultNames: string[];
 }
 
 const DEFAULT_SETTINGS: DualTitleTranslatorSettings = {
-	translatedFiles: [],
 	api: "",
 	separator : '⇋',
+	DefaultNames: [],
 }
 
 
@@ -31,11 +27,28 @@ export default class DualTitleTranslator extends Plugin {
 			this.app.vault.on('rename', (file: TFile, oldPath:string) => {
 				if (file.extension === 'md') {
 					if (file.path === this.app.workspace.getActiveFile()?.path) {
-						titleRename(this.app, this.settings, file, oldPath)
+						titleRename({
+							app:this.app,
+							settings:this.settings,
+							file,
+							oldPath
+						})
 					}
 				}
 			})
 		);
+
+		this.registerEvent(
+			this.app.workspace.on('file-open', (file) => {
+				if (file && file.extension === 'md') {
+					titleRename({
+						app: this.app,
+						settings: this.settings,
+						file,
+					})
+				}
+			})
+		)
 
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
