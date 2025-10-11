@@ -19,7 +19,7 @@ async function renameFile (app:App,activeFile:TFile|null, name:string) {
 			console.log(activeFile)
 		} catch (error) {
 			console.error('Error renaming file:', error);
-			new Notice('Error renaming file: '+error.message);
+			new Notice('Error renaming file: ' + (error?.message || 'Unknown error'));
 		}
 
 	}
@@ -27,15 +27,12 @@ async function renameFile (app:App,activeFile:TFile|null, name:string) {
 
 export async function titleRename({app, settings, saveSettings}:titleRenameProps) {
 
-	const separators:string[] = settings.historySeparators;
+	const separatorsArr:string[] = settings.historySeparators;
 	const separator = settings.separator;
 
 	const activeFile = app.workspace.getActiveFile();
 
-	const fileName = activeFile?.basename ?? '';
-	const hasKnownSeparator = separators.some(sep => fileName.includes(sep));
-
-	console.log(settings.historySeparators, 'settings')
+	const hasKnownSeparator = separatorsArr.some(sep => activeFile?.basename.includes(sep));
 
 	if (!hasKnownSeparator) {
 		if (activeFile && activeFile.parent) {

@@ -28,7 +28,7 @@ export default class DualTitleTranslator extends Plugin {
 						titleRename({
 							app:this.app,
 							settings:this.settings,
-							saveSettings: this.saveSettings
+							saveSettings: () => this.saveSettings()
 						})
 					}
 				}
@@ -42,14 +42,13 @@ export default class DualTitleTranslator extends Plugin {
 				titleRename({
 					app:this.app,
 					settings:this.settings,
-					saveSettings: this.saveSettings
+					saveSettings: () => this.saveSettings()
 				})
 			}
 		})
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new DualTitleTranslatorSettingTab(this.app, this));
 
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
 	onunload() {
@@ -65,7 +64,7 @@ export default class DualTitleTranslator extends Plugin {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
+class DualTitleTranslatorSettingTab extends PluginSettingTab {
 	plugin: DualTitleTranslator;
 
 	constructor(app: App, plugin: DualTitleTranslator) {
