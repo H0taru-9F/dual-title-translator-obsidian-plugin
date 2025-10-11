@@ -5,33 +5,39 @@ import deeplTranslate from "./deeplTranslate";
 type titleRenameProps = {
 	app: App;
 	settings: DualTitleTranslatorSettings;
-	file: TFile;
-	oldPath?: string;
+	saveSettings?: () => Promise<void>;
 }
 
 async function renameFile (app:App,activeFile:TFile|null, name:string) {
+	let isRenaming = false;
 	if (activeFile && activeFile.parent){
 		try {
+			if (isRenaming) return;
+			isRenaming = true;
 			await app.fileManager.renameFile(activeFile, `${activeFile.parent.path}/${name}`);
+			isRenaming = false;
 			console.log(activeFile)
 		} catch (error) {
 			console.error('Error renaming file:', error);
+			new Notice('Error renaming file: '+error.message);
 		}
 
 	}
 }
 
-export async function titleRename({app, settings, file, oldPath}:titleRenameProps) {
+export async function titleRename({app, settings, saveSettings}:titleRenameProps) {
 
-	const separator = `${settings.separator}`;
+	const separators:string[] = settings.historySeparators;
+	const separator = settings.separator;
 
 	const activeFile = app.workspace.getActiveFile();
 
-	const path = window.require("path");
-	const oldName = oldPath ? path.basename(oldPath, `.${file.extension}`) : false;
-	const newName = file.basename;
+	const fileName = activeFile?.basename ?? '';
+	const hasKnownSeparator = separators.some(sep => fileName.includes(sep));
 
-	if (!activeFile?.basename.includes(separator)) {
+	console.log(settings.historySeparators, 'settings')
+
+	if (!hasKnownSeparator) {
 		if (activeFile && activeFile.parent) {
 
 			const fileName = `${activeFile.basename}`;
@@ -39,28 +45,24 @@ export async function titleRename({app, settings, file, oldPath}:titleRenameProp
 			// const translatedName = await deeplTranslate(fileName, 'EN', settings.api);
 			const translatedName = "placeholder"; // Replace with actual translation logic
 
-			// const separatorWithSpaces = ` ${separator} `
 			const extension = `.${activeFile.extension}`
 			const TranslatedName = `${fileName} ${separator} ${translatedName}${extension}`;
 
 			await renameFile(app, activeFile, TranslatedName);
 
+			if (separator && !settings.historySeparators.includes(separator)) {
+				settings.historySeparators.push(separator);
+				if (saveSettings) {
+					await saveSettings();
+				} else {
+					console.warn("saveSettings not provided — historySeparators updated in memory only.");
+				}
+			}
 		}else {
 			new Notice('Something is wrong!');
 		}
 
-	}else if (oldName !== newName && !!oldName) {
-		const nameBeforeSeparator = newName.split(separator)[0]
-			.trim()
-			.replace(/[.]+$/, "");
-		const name = `${nameBeforeSeparator}.${activeFile?.extension}`;
-		console.log(name);
-		const translatedName = "placeholder"; // Replace with actual translation logic
-		const extension = `.${activeFile.extension}`
-		const TranslatedName = `${name} ${separator} ${translatedName}${extension}`;
-
-		await renameFile(app, activeFile, TranslatedName);
-	} else {
+	}else {
 		new Notice('File already has a translated title!');
 		return;
 	}
