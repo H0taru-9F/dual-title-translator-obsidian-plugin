@@ -1,7 +1,7 @@
 {
 	"name": "dual-title-translator",
 	"version": "1.0.0",
-	"description": "Automatically translates note titles using DeepL.",
+	"description": "Automatically translates note titles using DeepL and adds a dual-language title.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
