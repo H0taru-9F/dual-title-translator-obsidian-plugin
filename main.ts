@@ -58,19 +58,6 @@ export default class DualTitleTranslator extends Plugin {
 			})
 		);
 
-		this.addCommand({
-			id: 'rename-title',
-			name: 'Rename title',
-			callback: () => {
-				titleRename({
-					app:this.app,
-					settings:this.settings,
-					saveSettings: () => this.saveSettings(),
-					setRenaming: (value) => this.isRenaming = value
-				})
-			}
-		})
-
 		this.addSettingTab(new DualTitleTranslatorSettingTab(this.app, this));
 
 	}

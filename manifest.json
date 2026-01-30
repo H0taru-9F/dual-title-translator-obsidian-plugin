@@ -2,10 +2,9 @@
 	"id": "dual-title-translator",
 	"name": "DualTitle Translator",
 	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"minAppVersion": "0.1.0",
+	"description": " Automatically translates note titles using DeepL.",
+	"author": "H0taru.9f",
+	"authorUrl": "https://github.com/H0taru-9F",
 	"isDesktopOnly": false
 }
