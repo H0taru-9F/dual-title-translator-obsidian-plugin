@@ -1,28 +1,29 @@
-# Dual Title Translator for Obsidian
+# Dual Title Translator
 
-Automatically translates note titles into a second language using DeepL while keeping the original title intact.
+Automatically add a translated version of your note title while keeping the original — all in a single filename.
 
-Perfect for bilingual vaults, language learning, or notes that need both a native and translated title.
+Perfect for:
+- bilingual or multilingual vaults
+- learning languages
+- keeping notes searchable in multiple languages
 
----
-
-## ✨ Features
-
-- 🌍 Translate note titles using **DeepL**
-- 📝 Keep **original title + translated title**
-- 🔁 Auto-rename on file rename
-- 🚫 Exclude specific folders from translation
-- 📁 Folder-based blacklist with subfolder control
-- 🧠 Language auto-detection support
-- ⚡ Works fully inside Obsidian
+Powered by **DeepL**.
 
 ---
 
-## ⚙️ Settings
+## ✨ What it does
 
-### 🚀 First-time setup
+When you rename a note, the plugin detects the language of the title and adds a translated version using a configurable separator.
 
-When you enable the plugin for the first time, a few simple steps are required.
+**Example:**
+
+- Нотатки ⇋ Notes
+- Проєкт ⇋ Project
+
+![img.png](img.png)
+
+
+The original title is preserved — the translation is added next to it.
 
 ---
 
@@ -45,23 +46,12 @@ To use the plugin, you need a **DeepL API key**.
 
 ---
 
-### 🔗 Title separator
-
-Choose a separator that will be placed between the original and translated title.
-
-Examples: ⇋ | — | :: | /
-
-
-You can use **any characters or symbols** you like.
-
----
-
 ### 🌐 Languages
 
 Select two languages:
 - **First language**
-  - Can be set manually
-  - Or use **AUTO** (DeepL auto-detect)
+	- Can be set manually
+	- Or use **AUTO** (DeepL auto-detect)
 - **Second language**
 	- defaults to English
 
@@ -75,32 +65,25 @@ This means:
 
 ---
 
-### 🕘 Separator history
+## 🚀 Installation
 
-The plugin keeps a history of separators you have used before.
+### From Obsidian (recommended)
+1. Open **Settings → Community Plugins**
+2. Disable Safe Mode
+3. Click **Browse** and search for **Dual Title Translator**
+4. Install and enable the plugin
 
-This allows you to quickly switch between previously used separators without retyping them.
-
----
-
-### 🚫 Excluded folders
-
-You can specify folders whose notes **should not be translated**.
-
-- Any note inside a listed folder will be ignored
-- Subfolders can still be translated if they are not explicitly excluded
-
-This gives you fine-grained control over where automatic translation is applied.
+### Manual
+1. Download the latest release
+2. Copy it into `.obsidian/plugins/dual-title-translator`
+3. Reload Obsidian
 
 ---
+## 🔒 Privacy & API usage
 
-## 🧠 How it works
-
-1. You rename a note
-2. Plugin detects the rename event
-3. Checks if the file is allowed to be translated
-4. Sends title to DeepL
-5. Renames the note with translated title
+- Translations are performed via **DeepL API**
+- Only the note title is sent for translation
+- No data is stored or tracked by the plugin
 
 ---
 
@@ -116,7 +99,3 @@ If you find a bug or want a feature, feel free to open an issue.
 
 If you like the plugin, consider starring the repository 💙  
 It really helps visibility in the Obsidian ecosystem.
-
-
-
-
