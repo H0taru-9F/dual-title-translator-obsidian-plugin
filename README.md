@@ -104,40 +104,9 @@ This gives you fine-grained control over where automatic translation is applied.
 
 ---
 
-## 🛡 Permissions & Privacy
-
-- Only note titles are sent to DeepL
-- No content is stored or logged
-- No data is shared with third parties except DeepL
-
----
-
-## 🧩 Compatibility
-
-- Obsidian `v1.5+`
-- Desktop only (for now)
-- Requires internet connection for translation
-
----
-
-## 🐞 Known limitations
-
-- DeepL API rate limits apply
-- Translation may fail if API key is invalid or blocked
-- AUTO language detection depends on DeepL accuracy
-
----
-
-## 📄 License
-
-ISC License  
-© 2025 H0taru-9F
-
----
-
 ## ❤️ Contributing
 
-Pull requests and ideas are welcome!
+Ideas are welcome!
 
 If you find a bug or want a feature, feel free to open an issue.
 
