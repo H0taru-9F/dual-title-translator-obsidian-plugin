@@ -3,7 +3,7 @@
 	"name": "Dual Title Translator",
 	"version": "1.0.0",
 	"minAppVersion": "0.1.0",
-	"description": " Automatically translates note titles using DeepL.",
+	"description": " Automatically translates note titles using DeepL and adds a dual-language title",
 	"author": "H0taru.9f",
 	"authorUrl": "https://github.com/H0taru-9F",
 	"isDesktopOnly": false
