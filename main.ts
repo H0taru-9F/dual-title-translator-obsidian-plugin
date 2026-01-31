@@ -101,7 +101,7 @@ class DualTitleTranslatorSettingTab extends PluginSettingTab {
 			.setName('Separator')
 			.setDesc('Separator between file name and translated name')
 			.addText(text => text
-				.setPlaceholder('e.g. - ')
+				.setPlaceholder('E.g. - ')
 				.setValue(this.plugin.settings.separator)
 				.onChange(async (value) => {
 					if (!value.trim()) {
@@ -183,7 +183,7 @@ class DualTitleTranslatorSettingTab extends PluginSettingTab {
 			.setDesc('Exclude these folders from title translation')
 			.addSearch(search => {
 				search
-					.setPlaceholder('path/to/folder')
+					.setPlaceholder('Path/to/folder')
 					.setValue(newFolderPath)
 					.onChange(value => newFolderPath = value.trim());
 

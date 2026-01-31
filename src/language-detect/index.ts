@@ -29,7 +29,7 @@ export default function languageDetect(fileName:string, languages:LanguagesCode)
 		const to  = languagesByCode
 			.find(lang => lang.script !== script)!.code
 		const from = languagesByCode
-			.find(lang => lang!.script === script)!.code
+			.find(lang => lang.script === script)!.code
 
 		return {firstLanguage:from, secondLanguage:to}
 	}
