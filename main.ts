@@ -37,17 +37,16 @@ export default class DualTitleTranslator extends Plugin {
 		await this.loadSettings();
 
 		this.registerEvent(
-			this.app.vault.on('rename', (file: TFile) => {
+			this.app.vault.on('rename',async (file: TFile) => {
 				if (this.isRenaming) return;
 				if (file.extension === 'md') {
 					if (file.path === this.app.workspace.getActiveFile()?.path) {
-						console.log(this.app.workspace.getActiveFile())
 						const isInBlacklist = notTranslated({
 							nameBlackList: this.settings.untranslatableNames,
 							currentPath: this.app.workspace.getActiveFile()?.path ?? "/"
 						})
 						if (isInBlacklist)return;
-						titleRename({
+						await titleRename({
 							app:this.app,
 							settings:this.settings,
 							saveSettings: () => this.saveSettings(),
@@ -89,7 +88,7 @@ class DualTitleTranslatorSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('API Key')
+			.setName('API key')
 			.addText(text => text
 				.setPlaceholder('Enter your key')
 				.setValue(this.plugin.settings.api)
@@ -125,7 +124,7 @@ class DualTitleTranslatorSettingTab extends PluginSettingTab {
 			.setName('Select the main source language')
 			.setDesc('From what language translate mostly')
 			.addDropdown(dropdown => {
-				[...Object.values(LANGUAGES), ...[{code:"AUTO", name:"Auto Detect", script:"N/A"}]]
+				[...Object.values(LANGUAGES), ...[{code:"AUTO", name:"Auto detect", script:"N/A"}]]
 				.forEach((lang) => {
 					dropdown.addOption(lang.code, lang.name);
 				})
@@ -170,7 +169,7 @@ class DualTitleTranslatorSettingTab extends PluginSettingTab {
 					});
 			})
 			.addButton(button => {
-				button.setButtonText('Clear History');
+				button.setButtonText('Clear history');
 				button.onClick(async () => {
 					this.plugin.settings.historySeparators = [];
 					await this.plugin.saveSettings();
